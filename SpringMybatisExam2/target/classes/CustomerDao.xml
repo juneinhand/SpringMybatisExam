@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.dao.CustomerDao">
+	<select id="getCustomer" parameterType="com.hand.model.Customer"
+		resultType="com.hand.model.Customer">
+		SELECT * FROM customer WHERE customer_id=#{customer_id}
+	</select>
+	<insert id="addCustomer" parameterType="com.hand.model.Customer"
+		flushCache="true">
+		insert into
+		customer(store_id,first_name,last_name,email,address_id,create_date)
+		values(#{store_id},#{first_name},#{last_name},#{email},#{address_id},#{create_date})
+	</insert>
+
+	<resultMap type="int" id="resultListUser">
+		<result column="address_id" property="address_id" />
+	</resultMap>
+
+	<select id="selectAddress" resultMap="resultListUser">
+		select address_id from
+		address
+	</select>
+	<resultMap type="int" id="resultListCustomer">
+		<result column="customer_id" property="customer_id" />
+	</resultMap>
+
+	<select id="selectCustomer" resultMap="resultListCustomer">
+		select customer_id from customer
+	</select>
+	<delete id="deleteCustomer" parameterType="int">
+		delete from customer where customer_id=#{id}
+	</delete>
+	<select id="findAddress" parameterType="int" resultType="com.hand.model.Address">
+		select
+		address from address where address_id=#{address_id}
+	</select>
+</mapper>
